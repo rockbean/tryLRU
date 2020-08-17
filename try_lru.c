@@ -25,6 +25,7 @@ static int try_lru_hash_index(char *key, try_lru_t *try_lru)
 	int i, hash_size = try_lru->capacity * 2;
 	int hash = lru_hash(key, hash_size);
 
+	/* Hash with linear probing */
 	for (i = hash; try_lru->lru_hash_tbl[i] != NULL; i = (i+1) % (hash_size)) {
 		try_lru_entry_t *entry = LRU_LIST_ENTRY(try_lru->lru_hash_tbl[i], try_lru_entry_t, lru_entry);
 		if (!strcmp(entry->key, key)) {
